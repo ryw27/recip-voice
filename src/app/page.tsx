@@ -1,5 +1,5 @@
 import React from 'react';
-import VoiceRecorder from '../components/VoiceRecorder';
+import VoiceRecorder from '@/components/VoiceRecorder';
 
 export default function Home() {
   return (
