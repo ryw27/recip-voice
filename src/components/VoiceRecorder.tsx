@@ -18,29 +18,27 @@ export default function VoiceRecorder() {
   const recognitionRef = useRef<any>(null);
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   useEffect(() => {
-    return () => {
-      if (typeof window == "undefined") {
-        alert("Web Speech API not supported");
-        return ;
+    if (typeof window !== "undefined") {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        recognitionRef.current = new SpeechRecognition();
+        recognitionRef.current.continuous = true;
+        recognitionRef.current.interimResults = true;
+      } else {
+        alert("Web Speech API is not supported in this browser.");
       }
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("Web Speech API not supported in this browser");
-        return;
-      }
-      
-      // if (recognitionRef.current) {
-      //   console.log("stopped");
-      //   recognitionRef.current.stop()
-      // }
     }
-  });
-
+  }, []);
   const startRecording = () => {
+    if (!recognitionRef.current) {
+      alert("Speech Recognition is not initialized");
+      return;
+    }
+
     setIsRecording(true);
     setRecordingComplete(false);
-    recognitionRef.current = new SpeechRecognition();
-    recognitionRef.current.continuous = true;
-    recognitionRef.current.interimResults = true;
+    
     recognitionRef.current.start();
     console.log("started");
     recognitionRef.current.onstart = () => console.log("Recognition started");
