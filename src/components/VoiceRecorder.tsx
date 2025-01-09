@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import React, { useState, useRef, useEffect } from 'react';
 declare global {
@@ -11,7 +12,9 @@ export default function VoiceRecorder() {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [recordingComplete, setRecordingComplete] = useState<boolean>(false);
   const [transcript, setTranscript] = useState<string>("");
-  
+
+  const router = useRouter()
+
   const recognitionRef = useRef<any>(null);
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   useEffect(() => {
@@ -66,6 +69,7 @@ export default function VoiceRecorder() {
       recognitionRef.current.stop();
       setIsRecording(false);
       setRecordingComplete(true);
+      router.push("/add");
     }
   }
 
