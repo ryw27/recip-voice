@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 
+
 import React, { useState, useRef, useEffect } from 'react';
 declare global {
   interface Window {
@@ -16,11 +17,9 @@ export default function VoiceRecorder() {
   const router = useRouter()
 
   const recognitionRef = useRef<any>(null);
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   useEffect(() => {
     if (typeof window !== "undefined") {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-        window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognition) {
         recognitionRef.current = new SpeechRecognition();
         recognitionRef.current.continuous = true;
@@ -30,6 +29,7 @@ export default function VoiceRecorder() {
       }
     }
   }, []);
+
   const startRecording = () => {
     if (!recognitionRef.current) {
       alert("Speech Recognition is not initialized");
@@ -39,18 +39,16 @@ export default function VoiceRecorder() {
     setIsRecording(true);
     setRecordingComplete(false);
     
-    recognitionRef.current.start();
-    console.log("started");
-    recognitionRef.current.onstart = () => console.log("Recognition started");
-    recognitionRef.current.onend = () => console.log("Recognition ended");
-    recognitionRef.current.onerror = (event:any) => console.error("Recognition error:", event.error);
-    recognitionRef.current.onnomatch = () => console.log("No match found");
-    recognitionRef.current.onaudiostart = () => console.log("Audio capturing started");
-    recognitionRef.current.onaudioend = () => console.log("Audio capturing ended");
-    recognitionRef.current.onsoundstart = () => console.log("Sound detected");
-    recognitionRef.current.onsoundend = () => console.log("Sound ended");
-    recognitionRef.current.onspeechstart = () => console.log("Speech started");
-    recognitionRef.current.onspeechend = () => console.log("Speech ended");
+    // recognitionRef.current.onstart = () => console.log("Recognition started");
+    // recognitionRef.current.onend = () => console.log("Recognition ended");
+    // recognitionRef.current.onerror = (event:any) => console.error("Recognition error:", event.error);
+    // recognitionRef.current.onnomatch = () => console.log("No match found");
+    // recognitionRef.current.onaudiostart = () => console.log("Audio capturing started");
+    // recognitionRef.current.onaudioend = () => console.log("Audio capturing ended");
+    // recognitionRef.current.onsoundstart = () => console.log("Sound detected");
+    // recognitionRef.current.onsoundend = () => console.log("Sound ended");
+    // recognitionRef.current.onspeechstart = () => console.log("Speech started");
+    // recognitionRef.current.onspeechend = () => console.log("Speech ended");
 
 
     recognitionRef.current.onresult = (event:any) => {
@@ -58,8 +56,12 @@ export default function VoiceRecorder() {
       for (let i = 0; i < event.results.length; i++) {
         fullTranscript += event.results[i][0].transcript; // Accumulate the transcript
       }
+      
       setTranscript(fullTranscript);
+
     } 
+
+    recognitionRef.current.start();
   };
 
   const stopRecording = () => {
@@ -67,7 +69,15 @@ export default function VoiceRecorder() {
       recognitionRef.current.stop();
       setIsRecording(false);
       setRecordingComplete(true);
-      router.push("/add");
+      // const textStream = generateText({
+      //   model: openai('gpt-4o'),
+      //   system: 'You are a great writer transcribing recipes as true as possible',
+      //   prompt: `Transform this transcript: ${transcript} 
+      //             into a coherent recipe with a title, ingredients, estimated time, and instructions`,
+      // });
+      // console.log(textStream);
+
+      router.push("add")
     }
   }
 
