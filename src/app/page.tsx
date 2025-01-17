@@ -9,8 +9,9 @@ export default function Home() {
         <SideNav />
       </div> */
       <div className="flex justify-around flex-col items-center h-full w-full">
-        <h1 className="text-2xl font-bold">Save</h1>
+        {/* <h1 className="text-2xl font-bold">Save</h1> */}
         <VoiceRecorder />
+        
       </div>
     // </main>
   );
