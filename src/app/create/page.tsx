@@ -1,17 +1,14 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/input';
-import { resourceLimits } from 'worker_threads';
 
 interface transcriptData {
   recipeName: string;
-  categories: {
-    Ingredients: string[],
-    Steps: string[],
-    Tips: string[],
-    EstimatedTime: string;
-    recipeTags: string[]
-  }
+  Ingredients: string,
+  Steps: string,
+  Tips: string,
+  EstimatedTime: string;
+  recipeTags: string
 }
 
 export default function Home() {
@@ -21,48 +18,70 @@ export default function Home() {
     const fetchAndProcessTranscript = async () => {
       const userTranscript = localStorage.getItem("transcript");
       if (userTranscript) {
-        const data = JSON.parse(userTranscript);
-        // setTranscript(data.transcript ?? "")
-        const genAI = new GoogleGenerativeAI("AIzaSyAp6hXPk_ixdLqSlzru4g-b1KR2aRzAlHU");
-        const model = genAI.getGenerativeModel({model : "gemini-1.5-flash"});
-        const prompt = `Take the following recipe transcript ${data.transcript} and convert it into a readable recipe
-                          in JSON format with categories Ingredients, Steps, Tips, Estimated Time, and recipe tags`;
-        try {
-          const result = await model.generateContent(prompt);
-          console.log("Results: ", result.response.text());
-          setTranscript(result.response.text() ?? "")
-        } catch {
-          console.error("Error generating content");
+        const data = JSON.parse(userTranscript); 
+        if (data.transcript) {
+          const genAI = new GoogleGenerativeAI("AIzaSyAp6hXPk_ixdLqSlzru4g-b1KR2aRzAlHU");
+          const model = genAI.getGenerativeModel({model : "gemini-1.5-flash"});
+          const prompt = `
+              Take the recipe transcript: ${data.transcript}
+              and return a valid JSON object with the following keys:
+              - recipeName (string)
+              - Ingredients (string)
+              - Steps (string, numbered)
+              - Tips (string)
+              - EstimatedTime (string)
+              - recipeTags (string).
+            `;  
+          try {
+            const result = await model.generateContent(prompt);
+            const generatedText = result.response.text();
+            const cleanedText = generatedText
+              .replace(/```json/g, "") 
+              .replace(/```/g, "")     
+              .trim();                 
+            const parsedResult = JSON.parse(cleanedText);
+            setTranscript(parsedResult);
+            console.log(transcript?.Steps);
+          } catch {
+            console.error("Error generating content");
+          }
         }
+      }     
     }
-    }  
     fetchAndProcessTranscript();
   }, [])
+
   return (
     // <main className="flex flex-col items-center justify-around border-black border-2">
     <main className="flex flex-col items-center justify-around w-full color-white">
       <Input 
-        label={transcript?.recipeName || "Recipe Name"}
+        label="Recipe Name"
+        inputText={transcript?.recipeName}
         widthScale={.5} 
       />
       <Input 
-        label={transcript?.categories.Ingredients || "Ingredients"}
+        label="Ingredients"
+        inputText={transcript?.Ingredients}
         widthScale={.5}
       />
       <Input 
-        label={transcript?.categories.EstimatedTime || "Time"}
+        label="Estimated Time"
+        inputText={transcript?.EstimatedTime}
         widthScale={.5}
       />
       <Input 
-        label={transcript?.categories.Steps|| "Steps"}
+        label="Steps"
+        inputText={transcript?.Steps}
         widthScale={.5}
       />
       <Input 
-        label={transcript?.categories.Tips|| "Tips"}
+        label="Tips"
+        inputText={transcript?.Tips}
         widthScale={.5}
       />
       <Input
-        label={transcript?.categories.recipeTags || "Tags"}
+        label="Tags"
+        inputText={transcript?.recipeTags}
         widthScale={.5}
       />
     </main>
