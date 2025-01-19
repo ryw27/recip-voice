@@ -14,22 +14,20 @@ const Input = ({label, placeholder="Enter Text", inputText, widthScale=1}: Input
     const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
         if (inputRef.current) {
-            console.log("hello");
             inputRef.current.style.height = "auto";
             inputRef.current.style.height = `${inputRef.current.scrollHeight}px`
         } 
     }
 
     useEffect(() => {
+        if (inputText) {
+            setInputValue(inputText);
+        } 
         if (inputRef.current) {
             inputRef.current.style.height = "auto";
             inputRef.current.style.height = `${inputRef.current.scrollHeight}px`
         }
-        if (inputText) {
-            setInputValue(inputText);
-        }
-        console.log(inputValue);
-    }, [inputText])
+   }, [inputText])
 
     const calculatedWidth = `${widthScale * 100}vw`;
 

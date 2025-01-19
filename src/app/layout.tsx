@@ -28,11 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${geistMono.variable} antialiased`}>
-        <div className="flex h-screen">
-          <div className="">
+        <div className="flex h-screen w-screen border-2 border-black">
+          <div className="border-2 border-black">
             <SideNav />
           </div>
-          <div className="flex flex-grow p-6 h-full w-full">
+          <div className="flex flex-grow w-full">
             {children}
           </div>
         </div>

@@ -13,6 +13,5 @@ export type Recipe = {
     ingredients : string[],
     instructions: string[]
     tips : string[],
-    categories : string[]
-    
+    categories : string[] 
 }
