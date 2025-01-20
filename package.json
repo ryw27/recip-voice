@@ -12,6 +12,7 @@
     "@ai-sdk/openai": "^1.0.18",
     "@google/generative-ai": "^0.21.0",
     "@heroicons/react": "^2.2.0",
+    "@types/webspeechapi": "^0.0.29",
     "@vercel/postgres": "^0.10.0",
     "ai": "^4.0.33",
     "clsx": "^2.1.1",

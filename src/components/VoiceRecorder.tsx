@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import React, { useState, useRef, useEffect } from 'react';
 declare global {
   interface Window {
-    webkitSpeechRecognition:any;
-    SpeechRecognition:any;
+    webkitSpeechRecognition:typeof SpeechRecognition;
+    SpeechRecognition:typeof SpeechRecognition;
   }
 }
 export default function VoiceRecorder() {
@@ -16,7 +16,7 @@ export default function VoiceRecorder() {
 
   const router = useRouter()
 
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition>(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -51,7 +51,7 @@ export default function VoiceRecorder() {
     // recognitionRef.current.onspeechend = () => console.log("Speech ended");
 
 
-    recognitionRef.current.onresult = (event:any) => {
+    recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
       let fullTranscript = "";
       for (let i = 0; i < event.results.length; i++) {
         fullTranscript += event.results[i][0].transcript; // Accumulate the transcript

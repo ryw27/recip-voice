@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import NavLinks from './navlinks';
 
 export default async function SideNav() {

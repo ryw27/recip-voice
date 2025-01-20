@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Input from '@/components/input';
 import ImageUpload from '@/components/imageupload';
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 interface transcriptData {
   recipeName: string;
@@ -15,7 +16,6 @@ interface transcriptData {
 
 export default function Home() {
   const [transcript,setTranscript] = useState<transcriptData>()
-  const { GoogleGenerativeAI } = require("@google/generative-ai");
   useEffect(() => {
     const fetchAndProcessTranscript = async () => {
       const userTranscript = localStorage.getItem("transcript");
@@ -23,7 +23,7 @@ export default function Home() {
         const data = JSON.parse(userTranscript); 
         console.log("so ", data.transcript)
         if (data.transcript) {
-          const genAI = new GoogleGenerativeAI("AIzaSyDynau2szbzDbPfzZ9tEuTLSYSyfGdPSwE");
+          const genAI = new GoogleGenerativeAI("AIzaSyAyW2eFRhV-KGF0SkCC91v4c5-0nMpNIdM");
           // const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
           const model = genAI.getGenerativeModel({model : "gemini-1.5-flash"});
           const prompt = `
@@ -55,28 +55,28 @@ export default function Home() {
     localStorage.clear()
   }, [])
 
-  async function handleRecipeSubmit(event:React.MouseEvent<HTMLButtonElement>) {
-    try {
-      const formData = new FormData();
-      formData.append("Recipe Data", JSON.stringify(transcript)); 
+  // async function handleRecipeSubmit(event:React.MouseEvent<HTMLButtonElement>) {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("Recipe Data", JSON.stringify(transcript)); 
 
-      const response = await fetch("/api/saveRecipe",{
-        method: 'POST',
-        body : formData
-      })
+  //     const response = await fetch("/api/saveRecipe",{
+  //       method: 'POST',
+  //       body : formData
+  //     })
       
-      if (!response.ok) {
-        throw new Error(`Failed to save recipe: ${response.statusText}`)
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`Failed to save recipe: ${response.statusText}`)
+  //     }
 
-      const result = await response.json();
-      console.log("Recipe saved successfully", result);
-      return result;
-    } catch (error) {
-      console.error("Error: ", error);
-      throw error;
-    }
-  }
+  //     const result = await response.json();
+  //     console.log("Recipe saved successfully", result);
+  //     return result;
+  //   } catch (error) {
+  //     console.error("Error: ", error);
+  //     throw error;
+  //   }
+  // }
 
   return (
     // <main className="flex flex-col items-center justify-around border-black border-2">
@@ -112,12 +112,12 @@ export default function Home() {
         widthScale={.5}
       />
       <ImageUpload />
-      <button 
+      {/* <button 
         className="flex rounded-md bg-white text-black px-5 py-2"
         onClick={handleRecipeSubmit}
       >
         Save
-      </button>
+      </button> */}
     </main>
   );
 }

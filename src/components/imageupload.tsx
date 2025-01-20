@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 
 const ImageUpload = () => {
-    const [Images, setImages] = useState<File[]>([]);
+    const [images, setImages] = useState<File[]>([]);
     
     const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -24,6 +24,24 @@ const ImageUpload = () => {
                 onChange={handleImageInput}
                 className="block w-full" 
             />
+            {images.length > 0 && (
+                <div className="mt-4">
+                    <div className="text-sm font-medium">
+                        Selected images:
+                    </div>
+                    <div className="grid grid-cols-2 mt-2 gap-2">
+                        {images.map((image,index) => (
+                            <div key={index} className="w-24 h-24 rounded-md">
+                                <img 
+                                    src={URL.createObjectURL(image)}
+                                    alt={`preview-${index}`}
+                                    className="object-cover"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

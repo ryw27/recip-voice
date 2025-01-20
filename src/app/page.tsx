@@ -1,6 +1,5 @@
 import React from 'react';
 import VoiceRecorder from '@/components/VoiceRecorder';
-import SideNav from '@/components/sidenav';
 
 export default function Home() {
   return (

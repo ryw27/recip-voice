@@ -1,7 +1,7 @@
 "use client";
 import {
    PlusIcon,
-   HomeIcon,
+//    HomeIcon,
    MicrophoneIcon
 } from '@heroicons/react/24/outline';
 
