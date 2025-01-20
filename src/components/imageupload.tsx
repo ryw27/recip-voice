@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import Image from 'next/image';
 
 const ImageUpload = () => {
     const [images, setImages] = useState<File[]>([]);
@@ -32,9 +32,11 @@ const ImageUpload = () => {
                     <div className="grid grid-cols-2 mt-2 gap-2">
                         {images.map((image,index) => (
                             <div key={index} className="w-24 h-24 rounded-md">
-                                <img 
+                                <Image 
                                     src={URL.createObjectURL(image)}
                                     alt={`preview-${index}`}
+                                    width={500}
+                                    height={500}
                                     className="object-cover"
                                 />
                             </div>
