@@ -1,27 +1,55 @@
-import React from 'react';
-import VoiceRecorder from '@/components/VoiceRecorder';
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+import Link from 'next/link';
+import { Card, CardHeader, CardDescription, CardTitle } from '@/components/ui/card'
+import { Mic } from 'lucide-react';
 
-export default async function Home() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+export default function page() {
+ 
+    return (
+        <div className="flex flex-col justify-evenly">
+            <div className="text-center text-4xl font-bold">
+                Voice to Recipe
+            </div>
+            <p className="text-center text-gray-600">
+                Transform cooking instructions into beautifully organized recipes with just your voice.
+            </p>
+            <div className="flex justify-center gap-4">
+                <button className="bg-white text-black rounded-md shadow-md p-2">
+                    <Link href="/signup">Get Started</Link>
 
-  const { data: todos } = await supabase.from('todos').select()
-  return (
-    // <main className="flex h-screen items-center w-screen">
-      /* <div className="flex flex-col h-full">
-        <SideNav />
-      </div> */
-      <div className="flex justify-around flex-col items-center h-full w-full">
-        {/* <h1 className="text-2xl font-bold">Save</h1> */}
-        <VoiceRecorder />
-        <ul>
-          {todos?.map((todo:any) => (
-          <li>{todo}</li>
-          ))}
-        </ul>
-      </div>
-    // </main>
-  );
+                </button>
+                <button className="bg-black text-white rounded-md shadow-md p-2">
+                    <Link href="/login">Sign in</Link>
+                </button> 
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+                <Card className="bg-card">
+                    <CardHeader>
+                        <Mic className="w-6 h-6 text-white"/>
+                        <CardTitle>Record</CardTitle>
+                        <CardDescription>
+                            Simply speak your recipe instructions naturally
+                        </CardDescription>
+                    </CardHeader>
+                </Card>
+                <Card className="bg-card">
+                    <CardHeader>
+                        <Mic className="w-6 h-6"/>
+                        <CardTitle>Convert</CardTitle>
+                        <CardDescription>
+                            We'll transform your voice into organized recipe steps
+                        </CardDescription>
+                    </CardHeader>
+                </Card>
+                <Card className="bg-card">
+                    <CardHeader>
+                        <Mic className="w-6 h-6"/>
+                        <CardTitle>Save</CardTitle>
+                        <CardDescription>
+                            Save and access your recipes anywhere, anytime
+                        </CardDescription>
+                    </CardHeader>
+                </Card>
+            </div>
+        </div> 
+    );
 }
