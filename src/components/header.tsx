@@ -1,16 +1,13 @@
+'use client';
 import { supabase } from '@/utils/supabase/client';
-import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react';
-import { Router } from 'next/router';
+import { useRouter } from 'next/navigation'
+import { useState } from 'react';
 
 
 
 export default function Header() {
     const [loggedIn, setLoggedIn] = useState(false);
     const router = useRouter();
-
-    useEffect (() => {
-    });
 
     const handleLoginClick = () => {
         router.push("/login");
@@ -20,13 +17,18 @@ export default function Header() {
         router.push("/dashboard");
     }
     return (
-        <div className="HEADER flex w-screen justify-between">
-            <div className="text-lg font-bold">
-              Logo
+        <header className="w-full">
+            <div className="flex justify-between items-center py-4 px-4">
+                <div className="text-lg font-bold cursor-pointer" onClick={() => router.push("/")}>
+                Logo
+                </div>
+                <div className="flex items-center space-x-4">
+                    <button className="bg-white rounded-md text-black px-4 py-2 cursor-pointer" 
+                            onClick={loggedIn ? handleDashboardClick : handleLoginClick}>
+                        {loggedIn? "Dashboard" : "Login"}
+                    </button> 
+                </div> 
             </div>
-            <button className="" onClick={loggedIn ? handleDashboardClick : handleLoginClick}>
-                {loggedIn}
-            </button>
-        </div>
+        </header>
     );
 }
