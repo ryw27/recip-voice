@@ -1,10 +1,16 @@
-import { login, signup } from './actions'
+import { login } from '../actions'
 import Link from 'next/link';
 import { FaGoogle } from 'react-icons/fa'
 
 export default function LoginPage() {
+  const handleGoogleLogin = () => {
+
+  }
   return (
-    <div className="flex min-h-screen min-w-full justify-center items-center">
+    <div className="flex min-h-screen min-w-full justify-center items-center flex-col">
+      <div className="container mx-auto font-bold text-2xl text-center mb-6">
+        Logo
+      </div> 
       <main className="flex flex-col container mx-auto w-[450px] border border-gray-500 rounded-md space-y-4">
         <h2 className="text-2x1 font-bold text-center mt-4 py-2">
           Log in
@@ -23,6 +29,7 @@ export default function LoginPage() {
             <label htmlFor="email" className="block mb-2">Email</label>
             <input 
               id="email"
+              name="email"
               type="text"
               placeholder="Enter your email"
               className="shadow bg-inherit rounded-md border border-gray-700 py-2 px-3 w-full"
@@ -32,7 +39,8 @@ export default function LoginPage() {
           <div className="my-4 mx-6 ">
             <label htmlFor="password" className="block mb-2">Password</label>
             <input 
-              id="email"
+              id="password"
+              name="password"
               type="password"
               placeholder="Enter your password"
               className="shadow bg-inherit rounded-md border border-gray-700 py-2 px-3 w-full"
@@ -43,15 +51,16 @@ export default function LoginPage() {
               <p className="text-sm block text-gray-600 mr-1">
                 Need an account?
               </p>
-              <Link href="/signup" className="font-normal text-sm hover:underline">Sign up</Link>
+              <Link href="/register" className="font-normal text-sm hover:underline">Sign up</Link>
             </div>
             <p className="text-sm block text-white hover:underline">Forgot password?</p>
           </div>
           <div className="my-4 mx-6 ">
             <button
               id="Submit"
-              type="button"
+              type="submit"
               className="text-white shadow bg-gray-500 rounded-md border border-gray-700 py-2 px-3 w-full"
+              formAction={login}
             >Submit</button> 
           </div>
  
