@@ -1,3 +1,4 @@
+'use client';
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Edit } from 'lucide-react';
@@ -23,6 +24,7 @@ type displayProps = CommonProps & ConditionalProps
 export default function RecipeEditor({recip_id, data, images, fontsize, type}:displayProps) {
     const [editing, setEditing] = useState<boolean>(false);
     const [editValue, setEditValue] = useState<string>(data || "");
+    console.log(recip_id);
 
     const changeRecipe = async <T extends string | FileList>(recipPart:string, recipChange:T) => {
         try {
@@ -40,15 +42,17 @@ export default function RecipeEditor({recip_id, data, images, fontsize, type}:di
             console.error("Error updating recipe: ", error);
         }
     }
+    console.log(recip_id, data, images, fontsize, type);
 
     if (!editing) {
         return (
             <div className="group">
                 {images ? (
-                    <Image 
-                        src={URL.createObjectURL(images[0])}
-                        alt="Image"
-                    />
+                    <div className="flex flex-col gap-2">image</div>
+                    // <Image 
+                    //     src={URL.createObjectURL(images[0])}
+                    //     alt="Image"
+                    // />
                 ): (
                     <div className="flex flex-col">
                         <h1>{type}</h1>

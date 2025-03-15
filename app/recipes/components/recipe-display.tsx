@@ -37,6 +37,7 @@ export default async function RecipeDisplay({ recip_id, type, recip_data, images
         "estimatedTime": "text-xs",
         "recipeTags": "text-xs"
     };
+    console.log(type, recip_data, images);
     if (images) {
         return (
             <main>  
